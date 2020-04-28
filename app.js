@@ -1,8 +1,19 @@
+// Campground App
+
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs");
 
+// We start with Array for now, we'll connect a DB later
+var campgrounds = [
+	{name: "Jane's Mountain", image:"https://images.unsplash.com/photo-1556942154-006c061d4561?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"},
+	{name: " The Solomen's den", image:"https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"},
+	{name: "Canyon Bay", image:"https://images.unsplash.com/photo-1490452322586-70484206da38?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"}
+];
 
 // ROUTES
 
@@ -13,16 +24,24 @@ app.get("/", function (req, res){
 
 // Camprounds
 app.get("/campgrounds", function(req, res){
-	// We start with Array for now, we'll connect a DB later
-	var campgrounds = [
-		{name: "Jane's Mountain", image="https://pixabay.com/get/57e1d14a4e52ae14f1dc84609620367d1c3ed9e04e507441722673d79248c3_340.jpg"},
-		{name: " The Solomen's den", image="https://pixabay.com/get/50e9d4474856b10ff3d8992ccf2934771438dbf85254794e7c2778d1924b_340.jpg"},
-		{name: "Canyon Bay", image="https://pixabay.com/get/57e8d0424a5bae14f1dc84609620367d1c3ed9e04e507441722673d79248c3_340.jpg"}
-	]
 	res.render("campgrounds",{campgrounds: campgrounds});
 });
 
+// POST to campgrounds
+app.post("/campgrounds", function(req, res){
+    // We get the form data
+    var name =  req.body.name;
+    var image = req.body.image;
+    var newCampground = {name: name, image: image};
+    campgrounds.push(newCampground);
+    //console.log(campgrounds);
+    // We redirect to /campgrounds page
+    res.redirect("/campgrounds");
+});
 
+app.get("/campgrounds/new", function(req, res){
+    res.render("new");
+});
 
 
 
