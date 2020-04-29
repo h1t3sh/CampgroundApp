@@ -10,9 +10,14 @@ app.set("view engine", "ejs");
 
 // We start with Array for now, we'll connect a DB later
 var campgrounds = [
-	{name: "Jane's Mountain", image:"https://images.unsplash.com/photo-1556942154-006c061d4561?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"},
-	{name: " The Solomen's den", image:"https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"},
-	{name: "Canyon Bay", image:"https://images.unsplash.com/photo-1490452322586-70484206da38?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"}
+	{name: "Jane's Mountain", image:"https://pixabay.com/get/57e1d14a4e52ae14f1dc84609620367d1c3ed9e04e5074417d2d7fdd964fc7_340.jpg"},
+	{name: " The Solomen's den", image:"https://pixabay.com/get/50e9d4474856b10ff3d8992ccf2934771438dbf852547941772b72d5954f_340.jpg"},
+	{name: "Canyon Bay", image:"https://images.unsplash.com/photo-1494112142672-801c71472ba5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"},
+	{name: " The Solomen's den", image:"https://pixabay.com/get/50e9d4474856b10ff3d8992ccf2934771438dbf852547941772b72d5954f_340.jpg"},
+	{name: "Canyon Bay", image:"https://images.unsplash.com/photo-1494112142672-801c71472ba5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"},
+	{name: "Jane's Mountain", image:"https://pixabay.com/get/57e1d14a4e52ae14f1dc84609620367d1c3ed9e04e5074417d2d7fdd964fc7_340.jpg"},
+	{name: " The Solomen's den", image:"https://pixabay.com/get/50e9d4474856b10ff3d8992ccf2934771438dbf852547941772b72d5954f_340.jpg"},
+	{name: "Canyon Bay", image:"https://pixabay.com/get/52e8d4444255ae14f1dc84609620367d1c3ed9e04e5074417d2d7fdd914cc2_340.jpg"}
 ];
 
 // ROUTES
