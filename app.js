@@ -6,14 +6,15 @@ var express     = require('express'),
     bodyParser  = require('body-parser'),
     mongoose    = require('mongoose');
 
-mongoose.connect("mongodb://localhost/camp_app");   // Connect to camp_app DB, create if it doesn't exist yet
+mongoose.connect("mongodb://localhost:27017/camp_app", { useNewUrlParser: true , useUnifiedTopology: true });   // Connect to camp_app DB, create if it doesn't exist yet
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 // SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 // Make a model from Schema, so that we can use useful methods
@@ -23,7 +24,8 @@ var Campground = mongoose.model("Campground", campgroundSchema);
 //Campground.create(
 //    {
 //        name: "Canyon Bay", 
-//        image:"https://images.unsplash.com/photo-1494112142672-801c71472ba5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+//        image:"https://images.unsplash.com/photo-1494112142672-801c71472ba5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+//        description: "A Beautiful Bay with an Awesome sunset View."
 //    }, function(err,campground){
 //        if(err){
 //            console.log(err);
@@ -54,7 +56,7 @@ app.get("/", function (req, res){
 	res.render("home");
 });
 
-// Camprounds
+// INDEX - Show all Camprounds
 app.get("/campgrounds", function(req, res){
     // Get all campgrounds from DB
     Campground.find({}, function(err, allCampgrounds){
@@ -66,7 +68,7 @@ app.get("/campgrounds", function(req, res){
     });
 });
 
-// POST to campgrounds
+// CREATE - Add new Campground to DB
 app.post("/campgrounds", function(req, res){
     // We get the form data
     var name =  req.body.name;
@@ -83,11 +85,17 @@ app.post("/campgrounds", function(req, res){
     });
 });
 
+// NEW - Show Form to create new Campground
 app.get("/campgrounds/new", function(req, res){
     res.render("new");
 });
 
-
+// SHOW - Shows more info about one Campground
+app.get("/campgrounds/:id", function(req, res){
+    // find the campground with provided ID
+    // render show template with that campground
+    res.render("show");
+});
 
 
 
