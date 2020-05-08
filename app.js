@@ -63,7 +63,7 @@ app.get("/campgrounds", function(req, res){
         if (err){
             console.log(err);
         }else{
-            res.render("campgrounds",{campgrounds: allCampgrounds});
+            res.render("index",{campgrounds: allCampgrounds});
         }
     });
 });
@@ -73,7 +73,8 @@ app.post("/campgrounds", function(req, res){
     // We get the form data
     var name =  req.body.name;
     var image = req.body.image;
-    var newCampground = {name: name, image: image};
+    var desc = req.body.description;    // name attribute in input form
+    var newCampground = {name: name, image: image, description: desc};  // Add three items mentioned in schema and submitted by new form
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err,newlyCreated){
         if(err){
@@ -93,8 +94,14 @@ app.get("/campgrounds/new", function(req, res){
 // SHOW - Shows more info about one Campground
 app.get("/campgrounds/:id", function(req, res){
     // find the campground with provided ID
-    // render show template with that campground
-    res.render("show");
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log(err);
+        }else{
+            // render show template with that campground
+            res.render("show",{campground: foundCampground});
+        }
+    });
 });
 
 
