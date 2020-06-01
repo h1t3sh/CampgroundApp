@@ -6,7 +6,9 @@ var express     = require('express'),
     bodyParser  = require('body-parser'),
     mongoose    = require('mongoose'),
     Campground  = require('./models/campground');
+    seedDB      = require('./seeds')
 
+//seedDB();
 mongoose.connect("mongodb://localhost:27017/camp_app", { useNewUrlParser: true , useUnifiedTopology: true });   // Connect to camp_app DB, create if it doesn't exist yet
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -57,10 +59,11 @@ app.get("/campgrounds/new", function(req, res){
 // SHOW - Shows more info about one Campground
 app.get("/campgrounds/:id", function(req, res){
     // find the campground with provided ID
-    Campground.findById(req.params.id, function(err, foundCampground){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
             console.log(err);
         }else{
+            console.log(foundCampground);
             // render show template with that campground
             res.render("show",{campground: foundCampground});
         }
