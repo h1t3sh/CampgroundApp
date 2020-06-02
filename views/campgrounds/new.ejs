@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+
+<div class="container">
+    <div class="row">       <!-- Using the grid system -->
+        <h1 style="text-align: center">Submit a new Campground</h1>     <!-- inline styling for now, will change later -->
+        <div style="width: 30%; margin: 25px auto;">    <!-- Using inline styling for now, will change later, this div encloses and styles form -->
+            <form action="/campgrounds" method="POST">
+                <div class="form-group">        <!-- form-group class takes care of spacing, but needs to be added to each input and button -->
+                    <input type="text" class="form-control" placeholder="name" name="name">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="image url" name="image">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="description" name="description">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-lg btn-block">Submit!</button>
+                </div>
+            </form>
+            <a href="/campgrounds">Go Back</a>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>

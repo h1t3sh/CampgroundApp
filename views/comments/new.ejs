@@ -1,19 +1,16 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
 
 <div class="container">
     <div class="row">       <!-- Using the grid system -->
-        <h1 style="text-align: center">Submit a new Campground</h1>     <!-- inline styling for now, will change later -->
+        <h1 style="text-align: center">Add a New Comment to <%=campground.name %></h1>     <!-- inline styling for now, will change later -->
         <div style="width: 30%; margin: 25px auto;">    <!-- Using inline styling for now, will change later, this div encloses and styles form -->
-            <form action="/campgrounds" method="POST">
+            <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
                 <div class="form-group">        <!-- form-group class takes care of spacing, but needs to be added to each input and button -->
-                    <input type="text" class="form-control" placeholder="name" name="name">
+                    <input type="text" class="form-control" placeholder="text" name="comment[text]">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="image url" name="image">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="description" name="description">
+                    <input type="text" class="form-control" placeholder="author" name="comment[author]">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-lg btn-block">Submit!</button>
@@ -25,4 +22,4 @@
 </div>
 
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>
