@@ -13,6 +13,7 @@ var express     = require('express'),
 mongoose.connect("mongodb://localhost:27017/camp_app", { useNewUrlParser: true , useUnifiedTopology: true });   // Connect to camp_app DB, create if it doesn't exist yet
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));     // tell express to server public dir, __dirname expands current dir path
 
 
 // ROUTES
