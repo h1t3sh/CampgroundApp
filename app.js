@@ -5,7 +5,10 @@ var express     = require('express'),
     app         = express(),
     bodyParser  = require('body-parser'),
     mongoose    = require('mongoose'),
+    passport    = require('passport'),
+    LocalStrategy   = require('passport-local'),
     Campground  = require('./models/campground'),
+    User        = require('./models/user'),
     Comment     = require('./models/comment'),
     seedDB      = require('./seeds')
 
@@ -14,6 +17,18 @@ mongoose.connect("mongodb://localhost:27017/camp_app", { useNewUrlParser: true ,
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));     // tell express to server public dir, __dirname expands current dir path
+
+// PASSPORT CONFIGURATION
+app.use(require('express-session')({
+    secret: "The world still spins round nd round",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 // ROUTES
@@ -109,6 +124,29 @@ app.post("/campgrounds/:id/comments", function(req, res){
     })
     // connect new comment to campground
     // redirect campground to show page
+});
+
+//==============
+// auth routes
+//==============
+
+// show register form
+app.get("/register", function(req, res){
+    res.render("register");
+});
+
+//handle sign up logic
+app.post("/register", function(req, res){
+    var newUser = new User({ username: req.body.username });
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err);
+            return res.render("register")
+        }
+        passport.authenticate("local")(req, res, function(){
+            res.redirect("/campgrounds");
+        });
+    });
 });
 
 
