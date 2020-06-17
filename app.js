@@ -138,7 +138,7 @@ app.get("/register", function(req, res){
 //handle sign up logic
 app.post("/register", function(req, res){
     var newUser = new User({ username: req.body.username });
-    User.register(newUser, req.body.password, function(err, user){
+    User.register(newUser, req.body.password, function(err, user){      //from passport plugin
         if(err){
             console.log(err);
             return res.render("register")
@@ -148,6 +148,38 @@ app.post("/register", function(req, res){
         });
     });
 });
+
+
+// show login form
+app.get("/login", function(req, res){
+    res.render("login");
+});
+
+// handling login logic
+// app.post("/login", middleware, callback)
+app.post("/login", passport.authenticate("local",   //middleware
+    {
+        successRedirect: "/campgrounds",
+        failureRedirect: "/login"
+    }),function(req, res){  //callback doesn't do anyting here
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Start Server port (3000)
