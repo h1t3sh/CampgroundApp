@@ -30,6 +30,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//middleware that wiil run for every out
+app.use(function(req, res, next){     // req.user is undefined if no user is logged in
+    res.locals.currentUser = req.user;  //req.user provided by passport and setting it to res.locals make it available to all routes
+    next();
+});
 
 // ROUTES
 
@@ -90,7 +95,7 @@ app.get("/campgrounds/:id", function(req, res){
 // ============================
 // COMMENTS ROUTES
 // ============================
-app.get("/campgrounds/:id/comments/new", function(req, res){
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req, res){    //isloggedIn middleware
     // find campground by id
     Campground.findById(req.params.id, function(err, campground){
         if(err){
@@ -101,7 +106,7 @@ app.get("/campgrounds/:id/comments/new", function(req, res){
     })
 });
 
-app.post("/campgrounds/:id/comments", function(req, res){
+app.post("/campgrounds/:id/comments", isLoggedIn, function(req, res){   // check if post req that comes is from authenticated user
     // lookup campground using ID
     Campground.findById(req.params.id, function(err, campground){
         if(err){
@@ -164,8 +169,19 @@ app.post("/login", passport.authenticate("local",   //middleware
     }),function(req, res){  //callback doesn't do anyting here
 });
 
+//logout route
+app.get("/logout", function(req, res){
+    req.logout();                       // we get this from passport
+    res.redirect("/campgrounds");
+});
 
 
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 
 
@@ -186,4 +202,5 @@ app.post("/login", passport.authenticate("local",   //middleware
 app.listen(3000, function(){
 	console.log("Campground Server listening on port 3000");
 });
+
 
