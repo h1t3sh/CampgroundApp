@@ -6,8 +6,8 @@ var campgroundSchema = new mongoose.Schema({
     description: String,
     comments: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Comment"
+            type: mongoose.Schema.Types.ObjectId,       // refering comment object id
+            ref: "Comment"          // Model which v r going to refere, here v refer Comment model
         }
     ]
 });
