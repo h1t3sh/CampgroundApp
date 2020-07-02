@@ -6,6 +6,7 @@ var express     = require('express'),
     mongoose    = require('mongoose'),
     passport    = require('passport'),
     LocalStrategy   = require('passport-local'),
+    methodOverride  = require('method-override'),
     Campground  = require('./models/campground'),
     User        = require('./models/user'),
     Comment     = require('./models/comment'),
@@ -21,6 +22,7 @@ mongoose.connect("mongodb://localhost:27017/camp_app", { useNewUrlParser: true ,
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));     // tell express to server public dir, __dirname expands current dir path
+app.use(methodOverride("_method"));
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
