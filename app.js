@@ -36,7 +36,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//middleware that wiil run for every out
+//middleware that will run for every route
 app.use(function(req, res, next){     // req.user is undefined if no user is logged in
     res.locals.currentUser = req.user;  //req.user provided by passport and setting it to res.locals make it available to all routes
     next();
