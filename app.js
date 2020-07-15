@@ -7,6 +7,7 @@ var express     = require('express'),
     passport    = require('passport'),
     LocalStrategy   = require('passport-local'),
     methodOverride  = require('method-override'),
+    flash       = require('connect-flash'),
     Campground  = require('./models/campground'),
     User        = require('./models/user'),
     Comment     = require('./models/comment'),
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));     // tell express to server public dir, __dirname expands current dir path
 app.use(methodOverride("_method"));
+app.use(flash());
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
@@ -39,6 +41,8 @@ passport.deserializeUser(User.deserializeUser());
 //middleware that will run for every route
 app.use(function(req, res, next){     // req.user is undefined if no user is logged in
     res.locals.currentUser = req.user;  //req.user provided by passport and setting it to res.locals make it available to all routes
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
