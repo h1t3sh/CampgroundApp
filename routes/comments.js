@@ -43,6 +43,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){   // check if post r
                     campground.save();
             //        console.log(comment);
                     // redirect campground to show page
+                    req.flash("success", "Successfully added comment!");
                     res.redirect('/campgrounds/' + campground._id);
                 }
             })
@@ -78,9 +79,10 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, re
         if(err){
             res.redirect("back");
         }else{
+            req.flash("success", "Comment deleted");
             res.redirect("/campgrounds/" + req.params.id) ;
         }
-    })
+    });
 });
 
 
