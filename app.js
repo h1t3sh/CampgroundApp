@@ -19,8 +19,9 @@ var campgroundRoutes = require('./routes/campgrounds'),
     indexRoutes = require('./routes/index');  // Auth routes
 
 //seedDB();
-//mongoose.connect("mongodb+srv://j0hn123:nightisyoung789@cluster0.chjen.mongodb.net/campApp?retryWrites=true&w=majority", { useNewUrlParser: true , useUnifiedTopology: true });
-mongoose.connect("mongodb://localhost:27017/camp_app", { useNewUrlParser: true , useUnifiedTopology: true });   // Connect to camp_app DB, create if it doesn't exist yet
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/camp_app";
+mongoose.connect(url , { useNewUrlParser: true , useUnifiedTopology: true });
+//mongoose.connect("mongodb://localhost:27017/camp_app", { useNewUrlParser: true , useUnifiedTopology: true });   // Connect to camp_app DB, create if it doesn't exist yet
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));     // tell express to server public dir, __dirname expands current dir path
